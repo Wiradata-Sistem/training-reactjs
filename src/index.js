@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+const SelamatPagi = (props) => {
+  return (
+    <h1>Selamat pagi {props.name}</h1>
+  );
+};
+
+const ApaKabar = (props) => {
+  const [kondisi, ubahKondisi] = useState("Sejahtera");
+  /* const ubah = (event) => {
+    ubahKondisi(event.target.value);
+  }; */
+  const ubah = useCallback(event => {
+    ubahKondisi(event.target.value);
+  }, []);
+
+  return (
+    <div>
+      <SelamatPagi {...props} />
+      <p>Bagaimana Kabarmu? Semoga dalam keadaan {kondisi}</p>
+      <input onChange={ubah} />
+    </div>
+  );
+};
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <ApaKabar name='Budi' />,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

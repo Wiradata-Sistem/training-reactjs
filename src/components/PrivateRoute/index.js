@@ -1,16 +1,16 @@
 import { Route, Redirect, useLocation } from 'react-router-dom';
-import { FakeAuth } from '../../components';
+import { useSelector } from 'react-redux';
 
 const App = ({
   component: Component,
   ...rest
 }) => {
+  const user = useSelector(state => state.UserReducer.User);
   const location = useLocation();
-  console.log(FakeAuth);
-	return (
+  return (
 		<Route {...rest}>
     { 
-      FakeAuth.isAuthenticated === true ? 
+      user.token !== '' ? 
       <Component/> 
       : 
       <Redirect to={{ pathname: '/login', state: { from: location } }}/> }

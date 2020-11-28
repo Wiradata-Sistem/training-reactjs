@@ -9,7 +9,7 @@ const App = () => {
 			<NavBar/>
       <Switch>
         <Route path='/login' component={Login} />
-        <PrivateRoute path={'/apa-kabar/:name'} component={ApaKabar} />
+        <PrivateRoute path={'/apa-kabar'} component={ApaKabar} />
         <PrivateRoute exact path='/' component={Home}/>  
       </Switch>
 		</div>

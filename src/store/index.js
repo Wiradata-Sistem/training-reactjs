@@ -1,4 +1,5 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import { persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
 
@@ -12,6 +13,7 @@ const rootReducer = persistCombineReducers(config, {
 
 const store = createStore(
 	rootReducer,
+	applyMiddleware(thunk)
 );
 const persistor = persistStore(store);
 

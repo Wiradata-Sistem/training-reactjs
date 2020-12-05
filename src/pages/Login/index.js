@@ -1,9 +1,10 @@
-import { useEffect, useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useEffect, useCallback, useState } from 'react';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Row, Col, Form, Input, Button } from 'antd';
 import { actions } from '../../store';
-
-// import { FakeAuth } from '../../components';
+import { Images } from '../../constant';
+import { ImgBg, DivLogoContainer, DivForm } from './style';
 
 const App = () => {
   const history = useHistory();
@@ -11,10 +12,14 @@ const App = () => {
   const dispatch = useDispatch();
 	const { state } = useLocation();
 	const { from } = state || { from: { pathname: '/' } };
-  
-  const login = useCallback(() => {
-    dispatch(actions.UserAction.Login);
-  }, [dispatch]);
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = useCallback((event) => {
+    event.preventDefault();
+    dispatch(actions.UserAction.Login({username, password}));
+  }, [dispatch, password, username]);
 
   useEffect(() => {
     if (user.token !== '') {
@@ -22,13 +27,69 @@ const App = () => {
     }
   }, 
   [user.token, from, history]);
+
+  const onChangeUsername = useCallback((event) => {
+    setUsername(event.target.value);
+   }, []);
+   
+   const onChangePassword = useCallback((event) => {
+    setPassword(event.target.value);
+   }, []);
+   
   
   return (
-    <div>
-      <h1>Login</h1>
-      <p>You must log in to view the page at {from.pathname}</p>
-      <button onClick={login}>Login</button>
-    </div>);
+  <Row>
+    <Col span={12}>
+      <ImgBg src={ Images.loginBg.default } alt='erp' />
+      <DivLogoContainer>
+        <img src={ Images.logo.default } alt='logo'/>
+      </DivLogoContainer>
+    </Col>
+
+    <Col span={12}>
+      <DivForm>
+        <Form name='basic'>
+          <h3>Aplikasi ERP Lion Head Corp</h3>
+          <div className='input-form'>
+            <label>Username</label>
+            <Form.Item
+              name='username'
+              rules={ [{
+                required: true,
+                message: 'Silahkan isi username!',
+              }] }
+            >
+              <Input value={username} onChange={onChangeUsername} className='base-input' />
+            </Form.Item>
+          </div>
+
+          <div className='input-form'>
+            <label>Password</label>
+            <Form.Item
+              name='password'
+              rules={ [{
+                required: true,
+                message: 'Silahkan isi password!',
+              },] }
+                    >
+              <Input.Password value={password} onChange={onChangePassword} />
+            </Form.Item>
+          </div>
+
+          <div className='footer-form'>
+            <Form.Item>
+              <Button type='primary' htmlType='submit' onClick={ login }>Login</Button>
+            </Form.Item>
+
+            <Form.Item>
+              <Link to=''>Lupa Password ?</Link>
+            </Form.Item>
+          </div>
+        </Form>
+      </DivForm>
+    </Col>
+  </Row>
+  );
 }
 
 export default App;

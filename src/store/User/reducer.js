@@ -1,4 +1,4 @@
-const initialState = {User: {token: '', name: ''}};
+const initialState = {User: {token: '', name: '', access: []}};
 const UserReducer = (state = initialState, action) => {
 	switch (action.type) {
     case 'LOGIN':
@@ -6,7 +6,8 @@ const UserReducer = (state = initialState, action) => {
         ...state, 
         User: { 
           token: action.payload.token, 
-          name: action.payload.name 
+          name: action.payload.name,
+          access:action.payload.access 
         }
       };
     case 'LOGOUT':

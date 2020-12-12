@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 const IsAuth = (parentModule, module) => {
-  console.log(parentModule, module);
-	let isAuth = false;
+  let isAuth = false;
 	const user = useSelector(state => state.UserReducer.User);
 	if (user && user.access.length > 0) {
 		isAuth = user.access.includes('controllers');
@@ -12,8 +11,7 @@ const IsAuth = (parentModule, module) => {
 			isAuth = user.access.includes(module);
 		}
   }
-  console.log(isAuth);
-	return isAuth;
+  return isAuth;
 };
 
 export { IsAuth };

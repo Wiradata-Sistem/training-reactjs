@@ -4,11 +4,12 @@ import { persistStore, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
 
 import { UserReducer, UserAction } from './User';
+import { GroupReducer, GroupAction } from './Group';
 
 const config = { key: 'root', storage };
 
 const rootReducer = persistCombineReducers(config, {
-	UserReducer,
+	UserReducer, GroupReducer,
 });
 
 const store = createStore(
@@ -17,7 +18,7 @@ const store = createStore(
 );
 const persistor = persistStore(store);
 
-const actions = { UserAction };
+const actions = { UserAction, GroupAction };
 
 
 export { store as default, actions, persistor };

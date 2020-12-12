@@ -53,9 +53,13 @@ const App = (props) => {
 					</Menu.Item>
 				}
 
-				<Menu.Item key="3" icon={<GroupOutlined />}>
-					Group
-				</Menu.Item>
+				{
+					user.token !== '' && Auth.IsAuth('groups', 'groups:index') &&
+					<Menu.Item key="3" icon={<GroupOutlined />}>
+						<Link to='/groups'>Group</Link>
+					</Menu.Item>
+				}
+				
 				<SubMenu key="sub1" icon={<DatabaseOutlined />} title="Master Data">
 					<Menu.Item key="5">User</Menu.Item>
 					<Menu.Item key="6">Menu</Menu.Item>

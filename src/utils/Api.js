@@ -1,13 +1,14 @@
 import { App } from '../constant';
 
-const Api = async (method, url, data) => {
+const Api = async (method, url, token, data) => {
   method = method.toUpperCase();
   
   const options = {
     method: method,
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       }
   };
   
@@ -15,6 +16,9 @@ const Api = async (method, url, data) => {
     options.body = JSON.stringify(data);
   }
 
+  if (method === 'DELETE') {
+    options.headers['Content-Type'] = '*';
+  }
   
 	try {
 		let apiFetch = await fetch(App.API.URL + url, options);
